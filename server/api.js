@@ -1,5 +1,15 @@
 const User = require('./models/User')
 const bcrypt = require("bcrypt")
+const jwt = require('jsonwebtoken')
+const {JWT_KEY} = require('./config')
+const Post = require('./models/Post')
+
+
+const protected = (req, res)=>{
+    // console.log(req.user)
+    res.send("hello user")
+}
+
 
 
 const signup = async (req, res)=>{
@@ -49,7 +59,10 @@ const signin = async (req, res)=>{
             if(!match){
                 return res.status(422).send({error: "Invalid password"})
            }
-           res.send({message: 'you are signin'})        
+           const token = jwt.sign({findUser}, JWT_KEY ) 
+        //    res.send({message: 'you are signin'})
+        
+                res.send(token)
            
         
     } catch (error) {
@@ -58,9 +71,61 @@ const signin = async (req, res)=>{
 
 
 
+const createPost = async (req, res)=>{
+    const {title, body} = req.body
+    try {
+        if(!title || !body){
+            return res.status(402).json({error: "please add all fields"})
+        }
+        req.user.password = undefined
+        const post = await new Post({
+            title,
+            body,
+            postById: req.user
+        }).save()
 
+        res.send(post)    
+
+    } catch (error) {
+        res.send({error: "error message"})
+    }
+   
+}
+
+
+const allPost = async (req, res)=>{
+    try {
+        const posts = await Post
+        .find()
+        .populate("postById", "_id name")
+        res.send(posts)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+const myPosts = async (req, res)=>{
+    
+    try {        
+            const myPosts = await Post
+            .find({postById: req.user._id})
+            .populate('postById', "_id name")
+            
+            res.send(myPosts)
+
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
 
 module.exports = {
     signup,
-    signin
+    signin,
+    protected,
+    createPost,
+    allPost,
+    myPosts,
 }
