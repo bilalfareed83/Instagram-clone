@@ -13,7 +13,7 @@ const signup = async (req, res) => {
   const { name, email, password } = req.body;
   try {
     if (!name || !email || !password) {
-      res.status(422).send({ error: "please add all feild" });
+      res.status(422).json({ error: "please add all feild" });
     }
 
     const findUser = await User.findOne({ email: email });
@@ -37,6 +37,7 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
   try {
     if (!email || !password) {
       res.status(422).json({ error: "please add all feild" });
@@ -53,7 +54,7 @@ const signin = async (req, res) => {
     const token = jwt.sign({ findUser }, JWT_KEY);
     //    res.send({message: 'you are signin'})
 
-    res.send(token);
+    res.send({ token, findUser });
   } catch (error) {
     console.log(error);
   }
