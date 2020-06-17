@@ -27,11 +27,12 @@ const CreatePost = () => {
       method: "post",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
       body: JSON.stringify({
         title,
         body,
-        pic: url,
+        photo: url,
       }),
     })
       .then((res) => res.json())

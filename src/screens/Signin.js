@@ -21,6 +21,7 @@ const Signin = () => {
       method: "post",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
       body: JSON.stringify({
         email,
@@ -29,7 +30,7 @@ const Signin = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log(data.findUser);
         if (data.error) {
           M.toast({ html: data.error, classes: "#e53935 red darken-1" });
         } else {
@@ -37,6 +38,9 @@ const Signin = () => {
             html: "Signin successfully",
             classes: "#2e7d32 green darken-3",
           });
+          localStorage.setItem("jwt", data.token);
+          localStorage.setItem("user", JSON.stringify(data.findUser));
+
           history.push("/");
         }
       });
