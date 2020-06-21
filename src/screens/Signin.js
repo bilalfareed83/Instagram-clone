@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import M from "materialize-css";
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import M from 'materialize-css';
 
 const Signin = () => {
   const history = useHistory();
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
 
   const postData = async () => {
     if (
@@ -13,15 +13,15 @@ const Signin = () => {
         email
       )
     ) {
-      M.toast({ html: "Invalid email", classes: "#e53935 red darken-1" });
+      M.toast({ html: 'Invalid email', classes: '#e53935 red darken-1' });
       return;
     }
 
-    await fetch("/signin", {
-      method: "post",
+    await fetch('/signin', {
+      method: 'post',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('jwt'),
       },
       body: JSON.stringify({
         email,
@@ -32,16 +32,17 @@ const Signin = () => {
       .then((data) => {
         console.log(data.findUser);
         if (data.error) {
-          M.toast({ html: data.error, classes: "#e53935 red darken-1" });
+          M.toast({ html: data.error, classes: '#e53935 red darken-1' });
         } else {
-          M.toast({
-            html: "Signin successfully",
-            classes: "#2e7d32 green darken-3",
-          });
-          localStorage.setItem("jwt", data.token);
-          localStorage.setItem("user", JSON.stringify(data.findUser));
+          localStorage.setItem('jwt', data.token);
+          localStorage.setItem('user', JSON.stringify(data.findUser));
 
-          history.push("/");
+          M.toast({
+            html: 'Signin successfully',
+            classes: '#2e7d32 green darken-3',
+          });
+
+          history.push('/');
         }
       });
   };
