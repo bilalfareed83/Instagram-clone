@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 // import axios from "axios";
-import M from "materialize-css";
+import M from 'materialize-css';
 
 const Signup = () => {
   const history = useHistory();
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
 
   const postData = () => {
     if (
@@ -15,14 +15,14 @@ const Signup = () => {
         email
       )
     ) {
-      M.toast({ html: "Invalid email", classes: "#e53935 red darken-1" });
+      M.toast({ html: 'Invalid email', classes: '#e53935 red darken-1' });
       return;
     }
 
-    fetch("/signup", {
-      method: "post",
+    fetch('/signup', {
+      method: 'post',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         name,
@@ -33,10 +33,10 @@ const Signup = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          M.toast({ html: data.error, classes: "#e53935 red darken-1" });
+          M.toast({ html: data.error, classes: '#e53935 red darken-1' });
         } else {
-          M.toast({ html: data.message, classes: "#2e7d32 green darken-3" });
-          history.push("/signin");
+          M.toast({ html: data.message, classes: '#2e7d32 green darken-3' });
+          history.push('/signin');
         }
       });
   };
