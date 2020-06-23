@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { UserContext } from '../../App';
 
 const Navbar = () => {
+  const history = useHistory();
   const { state, dispatch } = useContext(UserContext);
   const renderList = () => {
     if (state) {
@@ -12,6 +13,15 @@ const Navbar = () => {
         </li>,
         <li>
           <Link to="/create">Create-Post</Link>
+        </li>,
+        <li
+          style={{ colors: 'red' }}
+          onClick={() => {
+            localStorage.clear();
+            history.push('/signin');
+          }}
+        >
+          Logout
         </li>,
       ];
     } else {
