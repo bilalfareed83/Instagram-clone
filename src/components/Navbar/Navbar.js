@@ -5,6 +5,7 @@ import { UserContext } from '../../App';
 const Navbar = () => {
   const history = useHistory();
   const { state, dispatch } = useContext(UserContext);
+  console.log(state);
   const renderList = () => {
     if (state) {
       return [
@@ -14,14 +15,17 @@ const Navbar = () => {
         <li>
           <Link to="/create">Create-Post</Link>
         </li>,
-        <li
-          style={{ colors: 'red' }}
-          onClick={() => {
-            localStorage.clear();
-            history.push('/signin');
-          }}
-        >
-          Logout
+        <li>
+          <button
+            onClick={() => {
+              localStorage.clear();
+              history.push('/signin');
+            }}
+            className="btn waves-effect waves-light #42a5f5 blue lighten-1"
+            type="submit"
+          >
+            Logout
+          </button>
         </li>,
       ];
     } else {
@@ -38,10 +42,18 @@ const Navbar = () => {
   return (
     <nav>
       <div className="nav-wrapper white">
-        <Link to={state ? '/' : '/signin'} className="brand-logo">
+        <Link
+          to={state ? '/' : '/signin'}
+          className="brand-logo"
+          style={{ paddingLeft: '10px' }}
+        >
           Instagram
         </Link>
-        <ul id="nav-mobile" className="right hide-on-med-and-down">
+        <ul
+          id="nav-mobile"
+          className="right hide-on-med-and-down"
+          style={{ paddingRight: '10px' }}
+        >
           {renderList()}
         </ul>
       </div>

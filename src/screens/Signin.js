@@ -71,7 +71,7 @@ const Signin = () => {
           type="submit"
           onClick={postData}
         >
-          Login
+          Singin
         </button>
         <h5>
           <Link to="/signup">Do you have an account?</Link>
