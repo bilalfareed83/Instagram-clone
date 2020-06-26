@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../App';
 
 const Home = () => {
+  const { state, dispatch } = useContext(UserContext);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -29,7 +31,15 @@ const Home = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        // console.log(result);
+        const newData = data.map((item) => {
+          if (item._id === result._id) {
+            return result;
+          } else {
+            return item;
+          }
+        });
+        setData(newData);
       })
       .catch((error) => console.log(error));
   };
@@ -47,7 +57,15 @@ const Home = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        // console.log(result);
+        const newData = data.map((item) => {
+          if (item._id === result._id) {
+            return result;
+          } else {
+            return item;
+          }
+        });
+        setData(newData);
       })
       .catch((error) => console.log(error));
   };
@@ -68,20 +86,24 @@ const Home = () => {
               >
                 favorite
               </i>
-              <i
-                className="material-icons"
-                style={{ cursor: 'pointer' }}
-                onClick={() => likesPost(item._id)}
-              >
-                thumb_up
-              </i>
-              <i
-                className="material-icons"
-                style={{ cursor: 'pointer' }}
-                onClick={() => unlikesPost(item._id)}
-              >
-                thumb_down
-              </i>
+              {item.likes.includes(state._id) ? (
+                <i
+                  className="material-icons"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => unlikesPost(item._id)}
+                >
+                  thumb_down
+                </i>
+              ) : (
+                <i
+                  className="material-icons"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => likesPost(item._id)}
+                >
+                  thumb_up
+                </i>
+              )}
+
               <h6>{item.likes.length} likes</h6>
 
               <h6>{item.title}</h6>
