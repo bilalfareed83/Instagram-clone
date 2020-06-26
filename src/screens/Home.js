@@ -10,8 +10,48 @@ const Home = () => {
       },
     })
       .then((res) => res.json())
-      .then((result) => setData(result));
+      .then((result) => {
+        // console.log(result);
+        setData(result);
+      });
   }, []);
+
+  const likesPost = (id) => {
+    fetch('/likes', {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+      },
+      body: JSON.stringify({
+        postById: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const unlikesPost = (id) => {
+    fetch('/unLikes', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+      },
+      body: JSON.stringify({
+        postById: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className="home">
       {data.map((item, i) => {
@@ -28,6 +68,22 @@ const Home = () => {
               >
                 favorite
               </i>
+              <i
+                className="material-icons"
+                style={{ cursor: 'pointer' }}
+                onClick={() => likesPost(item._id)}
+              >
+                thumb_up
+              </i>
+              <i
+                className="material-icons"
+                style={{ cursor: 'pointer' }}
+                onClick={() => unlikesPost(item._id)}
+              >
+                thumb_down
+              </i>
+              <h6>{item.likes.length} likes</h6>
+
               <h6>{item.title}</h6>
               <p>{item.body}</p>
               <input type="text" placeholder="add comment" />
