@@ -135,6 +135,18 @@ const Home = () => {
 
               <h6>{item.title}</h6>
               <p>{item.body}</p>
+
+              {/* {item.comments.map((comment, i) => {
+                console.log(comment.text);
+                return (
+                  <h6 key={i}>
+                    <span style={{ fontWeight: '10px' }}>
+                      {comment.postById.name}:{' '}
+                    </span>{' '}
+                    {comment.text}
+                  </h6>
+                );
+              })} */}
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
