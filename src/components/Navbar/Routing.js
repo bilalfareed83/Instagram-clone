@@ -6,6 +6,7 @@ import Profile from '../../screens/Profile';
 import Signup from '../../screens/Signup';
 import CreatePost from '../../screens/CreatePost';
 import { UserContext } from '../../App';
+import UserProfile from '../../screens/UserProfile';
 
 const Routing = () => {
   const history = useHistory();
@@ -24,9 +25,10 @@ const Routing = () => {
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/signin" component={Signin} />
-      <Route path="/profile" component={Profile} />
+      <Route exact path="/profile" component={Profile} />
       <Route path="/signup" component={Signup} />
       <Route path="/create" component={CreatePost} />
+      <Route path="/profile/:userId" component={UserProfile} />
     </Switch>
   );
 };
